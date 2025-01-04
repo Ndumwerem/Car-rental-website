@@ -1,0 +1,152 @@
+# HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rentals</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Car Rentals</h1>
+    </header>
+    <main>
+        <section class="filter-section">
+            <h2>Filter Cars</h2>
+            <form id="filter-form">
+                <label for="location">Location:</label>
+                <select id="location" name="location">
+                    <option value="New York">New York</option>
+                    <option value="Los Angeles">Los Angeles</option>
+                    <option value="Chicago">Chicago</option>
+                </select>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date">
+                <button id="filter-btn">Filter</button>
+            </form>
+        </section>
+        <section class="car-list-section">
+            <h2>Available Cars</h2>
+            <ul id="car-list">
+                <!-- Car list will be populated here -->
+            </ul>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+# CSS (in styles.css file)
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+}
+
+.filter-section {
+    background-color: #f7f7f7;
+    padding: 1em;
+    border: 1px solid #ddd;
+    margin-bottom: 2em;
+}
+
+.filter-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-section label {
+    margin-bottom: 0.5em;
+}
+
+.filter-section select, .filter-section input {
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+.filter-section button {
+    background-color: #333;
+    color: #fff;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+.car-list-section {
+    background-color: #f7f7f7;
+    padding: 1em;
+    border: 1px solid #ddd;
+}
+
+.car-list-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.car-list-section li {
+    padding: 1em;
+    border-bottom: 1px solid #ccc;
+}
+
+.car-list-section li:last-child {
+    border-bottom: none;
+}
+
+
+# JavaScript (in script.js file)
+
+// Sample car data
+const cars = [
+    { id: 1, location: 'New York', date: '2022-01-01', carType: 'Sedan', price: 40 },
+    { id: 2, location: 'Los Angeles', date: '2022-01-05', carType: 'SUV', price: 60 },
+    { id: 3, location: 'Chicago', date: '2022-01-10', carType: 'Truck', price: 80 },
+    // Add more car data here...
+];
+
+// Function to filter cars based on location and date
+function filterCars(location, date) {
+    return cars.filter(car => car.location === location && car.date === date);
+}
+
+// Function to render car list
+function renderCarList(cars) {
+    const carList = document.getElementById('car-list');
+    carList.innerHTML = '';
+    cars.forEach(car => {
+        const carListItem = document.createElement('li');
+        carListItem.textContent = `${car.carType} - $${car.price} per day`;
+        carList.appendChild(carListItem);
+    });
+}
+
+// Event listener for filter button
+document.getElementById('filter-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    const location = document.getElementById('location').value;
+    const date = document.getElementById('date').value;
+    const filteredCars = filterCars(location, date);
+    renderCarList(filteredCars);
+});
+
+// Render initial car list
+renderCarList(cars);
